@@ -32,7 +32,7 @@ int main(int argc, const char * argv[]) {
     auto start = chrono::high_resolution_clock::now();
     
     //Populate list with d and l
-    if (numOfDiscs > 1)
+    if (numOfDiscs > 0)
     {
         for ( int i = 0; i < numOfDiscs; i++)
         {
@@ -41,7 +41,7 @@ int main(int argc, const char * argv[]) {
         }
     }
     else
-        cerr << "Amount of discs entered needs to be greater than 1.";
+        cerr << "Amount of discs entered needs to be greater than 0.";
     
     //Display unordered list
     display(list);
@@ -70,7 +70,7 @@ int leftToRight(vector<char>& list)
     
     for( int i = 0; i < (list.size()/2); i++)
     {
-        for ( int j = i; j < (list.size()-1); j++)
+        for ( int j = i; j < (list.size()-(1+i)); j++)
         {
             if (list[j] == 'd' && list[j+1] == 'l')
             {

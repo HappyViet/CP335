@@ -32,7 +32,7 @@ int main(int argc, const char * argv[]) {
     auto start = std::chrono::high_resolution_clock::now();
     
     //Populate list with d and l
-    if (numOfDiscs > 1)
+    if (numOfDiscs > 0)
     {
         for ( int i = 0; i < numOfDiscs; i++)
         {
@@ -41,7 +41,7 @@ int main(int argc, const char * argv[]) {
         }
     }
     else
-        cerr << "Amount of discs entered needs to be greater than 1.";
+        cerr << "Amount of discs entered needs to be greater than 0.";
     
     //Display unordered list
     display(list);
@@ -72,7 +72,7 @@ int lawnmower(vector<char>& list)
     {
         if ( i % 2 == 0)
         {
-            for ( int j = i; j < (list.size()-1); j++)
+            for ( int j = i; j < (list.size()-(1+i)); j++)
             {
                 if (list[j] == 'd' && list[j+1] == 'l')
                 {
@@ -83,7 +83,7 @@ int lawnmower(vector<char>& list)
         }
         else
         {
-            for ( int j = static_cast<int>(list.size()-(1+i)); j > 0; j--)
+            for ( int j = static_cast<int>(list.size()-(1+i)); j > i; j--)
             {
                 if (list[j] == 'l' && list[j-1] == 'd')
                 {
