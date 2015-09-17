@@ -1,0 +1,11 @@
+CPSC 335­x – Programming Assignment #1:
+The alternating disks problem: lawnmower algorithm
+Enter the number of paired color disks: 50
+Initial configuration:
+List of disks
+d l d l d l d l d l d l d l d l d l d l d l d l d l d l d l d l d l d l d l d l d l d l d l d l d l d l d l d l d l d l d l d l d l d l d l d l d l d l d l d l d l d l d l d l d l d l d l d l d l d l 
+After moving darker ones to the left:
+List of disks
+l l l l l l l l l l l l l l l l l l l l l l l l l l l l l l l l l l l l l l l l l l l l l l l l l l d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d d 
+Runtime of: 4.5e-05 seconds.
+Number of swaps is 1275.
