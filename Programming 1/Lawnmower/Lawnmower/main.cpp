@@ -24,12 +24,9 @@ int main(int argc, const char * argv[]) {
     vector<char> list;
     int numOfDiscs, numOfSwaps;
     
-    cout << "CPSC 335­x – Programming Assignment #1:\nThe alternating disks problem: lawnmower algorithm\nEnter the number of single color disks (light or dark)\n";
+    cout << "CPSC 335­x – Programming Assignment #1:\nThe alternating disks problem: lawnmower algorithm\nEnter the number of paired color disks: ";
     cin >> numOfDiscs;
     cout << "Initial configuration:\n";
-    
-    //Start clock
-    auto start = std::chrono::high_resolution_clock::now();
     
     //Populate list with d and l
     if (numOfDiscs > 0)
@@ -48,17 +45,20 @@ int main(int argc, const char * argv[]) {
     
     cout << "\nAfter moving darker ones to the left:\n";
     
+    //Start clock
+    auto start = std::chrono::high_resolution_clock::now();
+    
     //Use algorithm
     numOfSwaps = lawnmower(list);
-    
-    //Display ordered list
-    display(list);
     
     //Stop clock
     auto end = chrono::high_resolution_clock::now();
     double elapsed = (chrono::duration_cast<chrono::microseconds>(end - start).count())/1E6;
-    cout << "\nRuntime of: " << elapsed << " seconds.";
     
+    //Display ordered list
+    display(list);
+    
+    cout << "\nRuntime of: " << elapsed << " seconds.";
     cout << "\nNumber of swaps is " << numOfSwaps << ".\n";
     
     return 0;
