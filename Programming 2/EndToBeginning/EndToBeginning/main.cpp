@@ -1,10 +1,9 @@
-//
 //  main.cpp
 //  EndToBeginning
 //
 //  Created by Scott Ha on 10/6/15.
+//  Collaborated with Sam Gutierrez and Kenneth Gunderson
 //  Copyright © 2015 Scott Ha. All rights reserved.
-//
 
 #include <iostream>
 #include <iomanip>
@@ -12,17 +11,15 @@
 
 using namespace std;
 
-int endToBeginning ( int, int *, int *, string *);
-//Algorithm
-
-void debugOutput( int, int *, string *);
-//For debugging
-
-void presentOutput( int, string);
-//For presenting
+void end ( int, int *, int * );
+//end			- Takes a list of numbers a lists the largest sequence numbers
+//int			- The size of the list
+//int *			- The list of numbers
+//int *			- A parallel list to store the amount of possible subsequences
 
 int main()
 {
+    //Declare default variables
     int num, *numList, *parallel;
 
     //Ask for number of elements
@@ -36,10 +33,9 @@ int main()
 	   exit(1);
     }
     
-    //Allocate memory for three arrays
+    //Allocate memory for two arrays
     numList = new int[num];
     parallel = new int[num];
-    string *output = new string[num];
     
     //Ask for elements
     cout << "Enter the elements in the sequence: ";
@@ -50,86 +46,71 @@ int main()
     }
     
     //Confirm list
-    cout << "Input sequence";
+    cout << "Input sequence: " << endl;
     for (int i = 0; i < num; i++)
-	   cout << numList[i];
+	   cout << numList[i] << " ";
     
-    int index = endToBeginning(num, numList, parallel, output);
-    //cout << endl;
-    //debugOutput(num, parallel, output);
-    presentOutput(parallel[index], output[index]);
+    //Start clock
+    auto start = chrono::high_resolution_clock::now();
+    
+    //EndToBeginning algorithm
+    end( num, numList, parallel );
+    
+    //Stop clock
+    auto end = chrono::high_resolution_clock::now();
+    double elapsed = (chrono::duration_cast<chrono::microseconds>(end - start).count())/1E6;
+    cout << "Runtime: " << elapsed << " seconds.";
     
     //Deallocate memory
     delete parallel;
-    delete output;
     delete numList;
     
     cout << endl;
     return 0;
 }
 
-int endToBeginning ( int num, int * numList, int * parallel, string * output)
+void end( int num, int * numList, int * parallel )
 {
-    //Allocated variables for checking
-    int count = 1, check, max = 0;
-    int location = num;
+    //Automatically set the last index to 0 because nothing can follow it
+    parallel[num-1] = 0;
+    
+    //Default variable
+    int largest = 0;
+    
+    //Comb through the number list starting from the second to last position
+    for ( int i = num-2; i >= 0; i-- )
+    {
+	   //The starting number of subsequences will be 0
+	   parallel[i] = 0;
+	   
+	   //Flow through the chunk behind the position
+	   for ( int j = i+1; j < num; j++ )
+		  //Check if the number in the chunk is smaller than the front value
+		  if ( numList[i] < numList[j] )
+			 //If the number is smaller, see if we are able to add the subsequences onto it
+			 if ( parallel[i] <= parallel[j] )
+				parallel[i] = parallel[j]+1;
+	   
+	   //Keep track of the largest possible subsequence list
+	   if ( parallel[i] > largest )
+		  largest = parallel[i];
+    }
+    
+    //Begin displaying results, starting with the number
+    cout << "\nThe longest increasing subsequence has length: " << largest+1 << endl;
+    
+    //Default variable
     string sequence = "";
     
-    //Begin at the last position
-    for (int i = num-1; i >= 0; i--)
+    //Comb through the subsequence list to find the numbers that we can tack on
+    for ( int i = 0; i < num; i++ )
     {
-	   //Set this number to the beginning of this chunk
-	   check = numList[i];
-	   
-	   //Add this number to a sequence string
-	   sequence = to_string(check);
-	   sequence += " ";
-	   
-	   //Iterate through the chunk to compare
-	   for ( int j = i; j < num; j++ )
+	   //If we find a matching number, this number can be added on and we decrement one
+	   if ( largest == parallel[i] )
 	   {
-		  //If a number bigger than the one being checked is found
-		  if (check < numList[j])
-		  {
-			 count++;
-			 check = numList[j];
-			 sequence += to_string(check);
-			 sequence += " ";
-		  }
+		  sequence += to_string(numList[i]) + " ";
+		  largest--;
 	   }
-	   
-	   //After iterating through the chunk, check
-	   if (count > max)
-	   {
-		  max = count;
-		  location = i;
-	   }
-	   
-	   //Save this data
-	   parallel[i] = count;
-	   output[i] = sequence;
-	   
-	   //Reset the temporary variables
-	   sequence = "";
-	   count = 1;
     }
-    
-    return location;
-}
-
-void debugOutput( int num, int *parallel, string *output)
-{
-    for ( int i = 0; i < num; i++)
-    {
-	   cout << "Index: [" << i << "]\n"
-		  << "Sequence length: " << parallel[i]
-		  << "\nOutput string: " << output[i] << endl;
-	   cout << endl;
-    }
-}
-
-void presentOutput( int winningNum, string winningString)
-{
-    cout << "The largest sequence length is " << winningNum << ".\n"
-	   << "Output string: " << winningString;
+    cout << "The longest increasing subsequence is: \n" << sequence << endl;
 }
