@@ -1,0 +1,49 @@
+Main()
+	int size_of_list, number_list, parallel_list
+	input(number of list elements)
+	if number < 1
+		number too small
+
+	number_list = new_list
+	parallel_list = new_list
+
+	for i to size of list
+		input(number_list [i])
+		parallel_list[i] = 0
+
+	for i to size of list
+		output(list element i)
+
+	//send list to be processed
+	end(size_of_list, number_list, parallel_list)
+
+	deallocate parallel_list
+	deallocate number_list
+
+
+End(size_of_list, number_list, parallel_list)
+	parallel[size_of_list - 1] = 0 //set last element to 0
+	
+	largest_possible_subset = 0
+	
+	for size_of_list-2 to 0
+		for outer_loop_index + 1 to size_of_list
+			if number_list[outer_loop_index] < number_list[inner_loop_index]
+				if parallel_list[outer_loop_index] < parallel_list[inner_loop_index]
+					parallel[outer_loop_index] = parallel[inner_loop_index] + 1
+
+		if parallel[outer_loop_index] > largest_possible_subset
+			largest_possible_subet = parallel[outer_loop_index]
+
+	
+
+	sequence = ""
+	for 0 to size_of_list
+		if largest_possible_subset == parallel_list[i]
+			decrement largest_possible_subset
+			sequence.append(number_list[i]
+
+
+
+
+	
