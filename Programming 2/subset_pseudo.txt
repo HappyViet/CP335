@@ -1,0 +1,40 @@
+def longestSubSet(L):
+	X = subsets(L)										1
+
+	y = 0											1
+
+	R = []											1
+
+	for H in X:										1 + n+0
+		tempR, tempy = checkForLongest(H, length(H))	
+		if (tempR):									1+ max(2,0)
+			R = tempR
+			y = tempy
+	return R
+
+def subsets(L):
+	result = [ [] ] # list containing one empty list						1
+	for x in L:											1+n-1
+	# make a copy of each list in result with x inserted in
+		with_x = []										1
+		for subset in result:									1 + n-1 + 1 + 1
+			with_x.append(subset + [x])					
+			# the new result is the current result plus with_x
+			result = result + with_x
+	return result	
+
+def checkForLongest:(L,n):
+	y = 0											1
+
+	R = []											1
+	for x in range(L):									1 + n-1
+		if(L[x] < L[x+1]):								1 + max(1,1)
+			y++
+
+		else:
+			return
+	R = L											1
+	return(R,y)
+
+
+Time complexity(n^2)
