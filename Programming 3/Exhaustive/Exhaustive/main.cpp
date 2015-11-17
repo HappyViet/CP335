@@ -1,6 +1,7 @@
 // Assignment 3: Euclidean traveling salesperson problem: exhaustive optimization algorithm
-// Michael Franzen
-// 891819765
+
+// Collaborated: Michael Franzen, Scott Ha, Kenneth Gunderson, Sam Gutierrez
+
 // A special case of the classical traveling salesman problem (TSP) where the input is a Euclidean graph
 // INPUT: a positive integer n and a list P of n distinct points representing vertices of a Euclidean graph
 // OUTPUT: a list of n points from P representing a Hamiltonian cycle of minimum total weight for the graph.
@@ -11,6 +12,7 @@
 #include <string>
 #include <chrono>
 #include <tgmath.h>
+
 using namespace std;
 
 struct point2D {
@@ -35,7 +37,7 @@ int main() {
     float bestDist, Dist;
     
     // display the header
-    cout << endl << "CPSC 335-x - Programming Assignment #3" << endl;
+    cout << "CPSC 335-x - Programming Assignment #3" << endl;
     cout << "Euclidean traveling salesperson problem: exhaustive optimization algorithm" << endl;
     cout << "Enter the number of vertices (>2) " << endl;
     
@@ -44,7 +46,7 @@ int main() {
     
     // if less than 3 vertices then terminate the program
     if (n <3)
-	   return 0;
+	   return 2;
     
     // allocate space for the sequence of 2D points
     P = new point2D[n];
@@ -58,8 +60,11 @@ int main() {
 	   cin >> P[i].y;
     }
     
+    cout << "Input: " << n << "\nn=" << n << endl;
+    
     // allocate space for the best set representing the indices of the points
     bestSet = new int[n];
+    
     // set the best set to be the list of indices, starting at 0
     for(i=0; i<n; i++)
 	   bestSet[i]=i;
@@ -73,6 +78,7 @@ int main() {
     
     // populate the starting array for the permutation algorithm
     A = new int[n];
+    
     // populate the array A with the values in the range 0 .. n-1
     for(i=0; i<n; i++)
 	   A[i] = i;
@@ -89,8 +95,7 @@ int main() {
     cout << "Minimum length is " << bestDist << endl;
     
     // print the elapsed time in seconds and fractions of seconds
-    int microseconds =
-    chrono::duration_cast<chrono::microseconds>(end - start).count();
+    int microseconds = static_cast<int>(chrono::duration_cast<chrono::microseconds>(end - start).count());
     double seconds = microseconds / 1E6;
     cout << "elapsed time: " << seconds << " seconds" << endl;
     
@@ -138,7 +143,7 @@ void print_perm(int n, int *A, int sizeA, point2D *P, int *bestSet, float &bestD
 // function to generate the permutation of indices of the list of points
 {
     int i;
-    float dist;
+    // float dist;
     
     if (n == 1) {
 	   cout << endl;
