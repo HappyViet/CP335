@@ -93,12 +93,12 @@ int main() {
     cout << "The Hamiltonian cycle of the minimum length " << endl;
     print_cycle(n, P, bestSet);
     
-    cout << "Best set: " ;
+    cout << "\nBest set: " ;
     for(i=0;i<n;i++)
 	   cout << bestSet[i] << " ";
     
     
-    cout << "Minimum length is " << bestDist << endl;
+    cout << "\nMinimum length is " << bestDist << endl;
     
     // print the elapsed time in seconds and fractions of seconds
     int microseconds = static_cast<int>(chrono::duration_cast<chrono::microseconds>(end - start).count());
@@ -125,7 +125,7 @@ void print_cycle(int n, point2D *P, int *seq)
     for(i=0; i< n; i++)
 	   cout << "(" << P[seq[i]].x << "," << P[seq[i]].y << ") ";
     cout << "(" << P[seq[0]].x << "," << P[seq[0]].y << ") ";
-    cout << endl;
+//    cout << endl;
 }
 
 float farthest(int n, point2D *P)
@@ -148,29 +148,52 @@ void print_perm(int n, int *A, int sizeA, point2D *P, int *bestSet, float &bestD
 // function to generate the permutation of indices of the list of points
 {
     int i;
-    float dist = 0;
+    float dist, totalDist = 0;
+    float xC, yC;
     
     if (n == 1) {
-	   cout << endl;
+//	   cout << endl;
 	   
-	   cout << "Permutation: ";
-	   for(i=0; i< sizeA; i++)
-		  cout << A[i] << " " ;
+	   //cout << "Permutation: ";
+	   //for(i=0; i< sizeA; i++)
+	   //	 cout << A[i] << " " ;
 	   
 	   for(i=0; i< sizeA-1; i++){
-		  // DO THIS MATH
-		  dist += abs(P[i].y - P[i+1].y)/abs(P[i].x - P[i+1].x);
+		  yC = pow((P[A[i+1]].y - P[A[i]].y), 2);
+		  //cout << "\nPower of Y coordinates: " << yC;
+		  
+		  xC = pow((P[A[i+1]].x - P[A[i]].x), 2);
+		  //cout << "\nPower of X coordinates: " << xC;
+		  
+		  dist = sqrt( yC + xC );
+		  //cout << "\nSquare of both added together: " << dist;
+		  
+		  totalDist += dist;
+		  //cout << "\nCurrent total distance: " << totalDist;
 	   }
-	   cout << "Dist calculated as " << dist;
-	   dist += abs(P[0].y - P[sizeA-1].y)/abs(P[0].x - P[sizeA-1].x);
-	   cout << "Best Dist now = " << dist;
 	   
-	   if (dist < bestDist){
-		  bestDist = dist;
-		  bestSet = A;
+	   yC = pow((P[A[sizeA-1]].y - P[A[0]].y), 2);
+	   //cout << "\nPower of Y coordinates: " << yC;
+	   xC = pow((P[A[sizeA-1]].x - P[A[0]].x), 2);
+	   //cout << "\nPower of X coordinates: " << xC;
+	   dist = sqrt( yC + xC );
+	   //cout << "\nSquare of both added together: " << dist;
+	   
+	   totalDist += dist;
+	   //cout << "\nCurrent total distance: " << totalDist;
+	   
+//	   cout << "\nDist calculated as " << totalDist;
+	   
+	   if (totalDist < bestDist){
+		  bestDist = totalDist;
+		  
+		  for ( i=0; i<sizeA-1; i++)
+			 bestSet[i] = A[i];
 	   }
 	   
-	   cout << endl;
+//	   cout << "\nBest Dist now = " << bestDist;
+	   
+//	   cout << endl;
     }
     else {
 	   for(i = 0 ; i< n-1; i++) {
