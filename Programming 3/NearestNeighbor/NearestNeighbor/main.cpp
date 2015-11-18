@@ -85,7 +85,7 @@ int main() {
     M[i]= A;
     
     // set it as visited
-    Visited[i] = true;
+    Visited[A] = true;
     
     for(i=1; i<n; i++) {
 	   // calculate the nearest unvisited neighbor from node A
@@ -101,7 +101,7 @@ int main() {
     
     // calculate the length of the Hamiltonian cycle
     dist = 0;
-    int xC, yC;
+    float xC, yC;
     for (i=0; i < n-1; i++)
     {
 	   xC = pow((P[M[i]].x - P[M[i+1]].x), 2);
@@ -150,20 +150,47 @@ int farthest_point(int n, point2D *P)
 // function to calculate the furthest distance between any two 2D points
 {
     float max_dist=0;
-    int i, j;
+    int i, j, A = 0;
     float dist;
 
-	   for(i=0; i < n-1; i++)
-		  for(j=0;j<n-1;j++) {
-			 dist = (P[i].x - P[j].x)*(P[i].x - P[j].x) + (P[i].y - P[j].y)*(P[i].y - P[j].y);
+	   for(i=0; i < n; i++)
+		  for(j=0;j<n;j++) {
+			 dist = sqrt((P[i].x - P[j].x)*(P[i].x - P[j].x) + (P[i].y - P[j].y)*(P[i].y - P[j].y));
 			 if (max_dist < dist)
-				max_dist = dist;
+				{
+				    max_dist = dist;
+				    A = i;
+				}
 		  }
-    return sqrt(max_dist);
+    return A;
 }
 
 int nearest(int n, point2D *P, int A, bool *Visited)
 // function to calculate the nearest unvisited neighboring point
 {
-    return 0;
+    float smallest = 0, distance;
+    int nearestIndex = 0;
+    float xC, yC;
+    
+    for ( int i = 0; i < n; i++){
+	   if ( i != A ){
+		  if ( Visited[i] == false ){
+			 // making distance
+			 xC = pow((P[i].x - P[A].x), 2);
+			 yC = pow((P[i].y - P[A].y), 2);
+			 distance = sqrt( xC + yC );
+			 if ( smallest > 0){
+				if ( distance < smallest ){
+				    smallest = distance;
+				    nearestIndex = i;
+				}
+			 }
+			 else{
+				smallest = distance;
+				nearestIndex = i;
+			 }
+		  }
+	   }
+    }
+    return nearestIndex;
 }
