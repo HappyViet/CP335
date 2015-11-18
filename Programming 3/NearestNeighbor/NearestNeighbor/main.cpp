@@ -40,7 +40,7 @@ int main() {
     int A, B;
     
     // display the header
-    cout << endl << "CPSC 335­x ­ Programming Assignment #3" << endl;
+    cout << "CPSC 335­x ­ Programming Assignment #3" << endl;
     cout << "Euclidean traveling salesperson problem: exhaustive optimization algorithm" << endl;
     cout << "Enter the number of vertices (>2) " << endl;
     
