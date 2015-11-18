@@ -92,6 +92,12 @@ int main() {
     // after shuffling them
     cout << "The Hamiltonian cycle of the minimum length " << endl;
     print_cycle(n, P, bestSet);
+    
+    cout << "Best set: " ;
+    for(i=0;i<n;i++)
+	   cout << bestSet[i] << " ";
+    
+    
     cout << "Minimum length is " << bestDist << endl;
     
     // print the elapsed time in seconds and fractions of seconds
@@ -136,19 +142,34 @@ float farthest(int n, point2D *P)
 			 max_dist = dist;
 	   }
     return sqrt(max_dist);
-    
 }
 
 void print_perm(int n, int *A, int sizeA, point2D *P, int *bestSet, float &bestDist)
 // function to generate the permutation of indices of the list of points
 {
     int i;
-    // float dist;
+    float dist = 0;
     
     if (n == 1) {
 	   cout << endl;
+	   
 	   cout << "Permutation: ";
-	   for(i=0; i< sizeA; i++)      cout << A[i] << " " ;
+	   for(i=0; i< sizeA; i++)
+		  cout << A[i] << " " ;
+	   
+	   for(i=0; i< sizeA-1; i++){
+		  // DO THIS MATH
+		  dist += abs(P[i].y - P[i+1].y)/abs(P[i].x - P[i+1].x);
+	   }
+	   cout << "Dist calculated as " << dist;
+	   dist += abs(P[0].y - P[sizeA-1].y)/abs(P[0].x - P[sizeA-1].x);
+	   cout << "Best Dist now = " << dist;
+	   
+	   if (dist < bestDist){
+		  bestDist = dist;
+		  bestSet = A;
+	   }
+	   
 	   cout << endl;
     }
     else {
