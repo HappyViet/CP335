@@ -119,7 +119,7 @@ int main() {
     // after shuffling them
     cout << "The Hamiltonian cycle of a relative minimum length " << endl;
     print_cycle(n, P, M);
-    cout << "The relative minimum length is " << dist << endl;
+    cout << "\nThe relative minimum length is " << dist << endl;
     
     // print the elapsed time in seconds and fractions of seconds
     int microseconds = static_cast<int>(chrono::duration_cast<chrono::microseconds>(end - start).count());

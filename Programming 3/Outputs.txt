@@ -1,0 +1,105 @@
+Exhaustive Output: 4 vertices
+------------------------------
+CPSC 335-x - Programming Assignment #3
+Euclidean traveling salesperson problem: exhaustive optimization algorithm
+Enter the number of vertices (>2) 
+4
+Enter the points; make sure that they are distinct
+x=2
+y=0
+x=1
+y=1
+x=3
+y=1
+x=.1
+y=0
+Input: 4
+n=4
+The Hamiltonian cycle of the minimum length 
+(2,0) (3,1) (1,1) (0.1,0) (2,0) 
+Best set: 0 2 1 3 
+Minimum length is 6.65958
+elapsed time: 2e-05 seconds
+Program ended with exit code: 0
+
+Exhaustive Output: 8 vertices
+------------------------------
+CPSC 335-x - Programming Assignment #3
+Euclidean traveling salesperson problem: exhaustive optimization algorithm
+Enter the number of vertices (>2) 
+8
+Enter the points; make sure that they are distinct
+x=0
+y=4
+x=2
+y=1
+x=1
+y=6
+x=2
+y=7
+x=3
+y=5
+x=3
+y=2
+x=5
+y=2
+x=6
+y=5
+Input: 8
+n=8
+The Hamiltonian cycle of the minimum length 
+(3,2) (5,2) (6,5) (3,5) (2,7) (1,6) (0,4) (6,5) (3,2) 
+Best set: 5 6 7 4 3 2 0 7 
+Minimum length is 19.0684
+elapsed time: 0.026258 seconds
+Program ended with exit code: 0
+
+Nearest Neighbor Output: 4 vertices
+------------------------------
+CPSC 335­x ­ Programming Assignment #3
+Euclidean traveling salesperson problem: exhaustive optimization algorithm
+Enter the number of vertices (>2) 
+4
+Enter the points; make sure that they are distinct
+x=2
+y=0
+x=1
+y=1
+x=3
+y=1
+x=.1
+y=0
+The Hamiltonian cycle of a relative minimum length 
+(3,1) (2,0) (1,1) (0.1,0) (3,1) 
+The relative minimum length is 7.24136
+elapsed time: 8e-06 seconds
+Program ended with exit code: 0
+
+Nearest Neighbor Output: 8 vertices
+------------------------------
+CPSC 335­x ­ Programming Assignment #3
+Euclidean traveling salesperson problem: exhaustive optimization algorithm
+Enter the number of vertices (>2) 
+8
+Enter the points; make sure that they are distinct
+x=0
+y=4
+x=2
+y=1
+x=1
+y=6
+x=2
+y=7
+x=3
+y=5
+x=3
+y=2
+x=5
+y=2
+x=6
+y=5
+The Hamiltonian cycle of a relative minimum length 
+(0,4) (1,6) (2,7) (3,5) (3,2) (2,1) (5,2) (6,5) (0,4) 
+The relative minimum length is 22.7079
+elapsed time: 1.4e-05 seconds
+Program ended with exit code: 0
