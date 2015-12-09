@@ -9,6 +9,7 @@
 #include <iostream>
 #include <cstring>
 #include <stdio.h>
+#include <cmath>
 
 using namespace std;
 
@@ -55,7 +56,7 @@ int main() {
 	   while ( fgets ( s, 255, file ) != NULL ) {
 		  // place null character at the end of the line instead of <return>
 		  len = strlen(s);
-		  s[len­2]='\0';
+		  s[len-2]='\0';
 		  
 		  // insert the string in the cuckoo table
 		  placed = place_in_hash_tables(s);
@@ -63,7 +64,7 @@ int main() {
 		  // check whether the placement was successful
 		  if (!placed) {
 		  cout << "Placement has failed" << endl;
-		  return ­1;
+		  return 1;
 		  }
 	   }
 	   fclose ( file ); }
@@ -89,7 +90,7 @@ bool place_in_hash_tables (char *s) {
     placed = false;
     
     pos = f(temp_s, index);
-    while((!placed ) && (counter < 2*tablesize)) {
+    while( (!placed) && (counter < 2*tablesize) ) {
 	   if (strcmp(t[pos][index], "") == 0 ) {
 		  // the entry at index <pos> in the <index> hash table is available so store the string <temp_s> there
 		  cout << "String <" << temp_s << "> will be placed at";
@@ -104,13 +105,24 @@ bool place_in_hash_tables (char *s) {
 		  cout << "String <" << temp_s << "> will be placed at" << " t[" << pos;
 		  cout <<"][" << index << "]" << " replacing <" << t[pos][index] << ">";
 		  cout << endl;
+		  
 		  // YOU NEED TO WRITE THE CODE TO STORE IN temp THE STRING STORED AT
 		  // t[pos][index] AND STORE IN t[pos][index] THE STRING temp_s
+		  strcpy(temp, t[pos][index]);
+		  strcpy(t[pos][index], temp_s);
+		  
 		  strcpy(temp_s, temp);
+		  
 		  // NOW temp_s CONTAINING THE EVICTED STRING NEEDS TO BE STORED
 		  // IN THE OTHER TABLE
 		  // WRITE THE CODE TO SET index TO INDICATE THE OTHER TABLE
+		  if (index==0)
+			 index = 1;
+		  else
+			 index = 0;
 		  // WRITE THE CODE TO CALCULATE IN pos THE HASH VALUE FOR temp_s
+		  pos = f(temp_s, index);
+		  
 		  counter ++;
 	   }
     }
@@ -119,7 +131,8 @@ bool place_in_hash_tables (char *s) {
 
 // compute the hash functions
 size_t f(char *s, size_t index) {
-    // s is the string (the key) to which we apply the hash function // index indicates which hash function will be used
+    // s is the string (the key) to which we apply the hash function
+    // index indicates which hash function will be used
     // index == 0 means the first hash function
     // index == 1 means the second hash function
     size_t po, len;
@@ -130,32 +143,49 @@ size_t f(char *s, size_t index) {
     
     if (index == 0) {
 	   val = s[0];
-	   val = val % tablesize;
 	   
-	   if (val < 0)
-		  val += tablesize;
-	   
-	   if (len == 1)
-		  return val;
-	   for (i = 1; i < len; i++) {
-		  temp = s[i];
-		  po *= 37;
-		  po = po % tablesize;
-		  
-		  if (po < 0)
-			 po += tablesize;
-		  
-		  val += temp * po;
+	   if (len == 1){
 		  val = val % tablesize;
 		  if (val < 0)
-			 val += tablesize;
+		    val += tablesize;
+		  
+		  return val;
 	   }
+	   
+	   for (i = 1; i < len; i++) {
+		  temp = s[i];
+		  po = pow(37, i);
+		  
+		  val += temp * po;
+	   }
+	   val = val % tablesize;
+	   if (val < 0)
+		  val += tablesize;
 	   return val;
     }
     else {
 	   // YOU NEED TO IMPLEMENT THE STEPS TO CALCULATE THE SECOND
 	   // HASH FUNCTION
+	   val = s[0];
+	   
+	   if (len == 1){
+		  val = val % tablesize;
+		  if (val < 0)
+		    val += tablesize;
+		  
+		  return val;
+	   }
+	   
+	   for (i = 1; i < len; i++) {
+		  temp = s[len - i - 1];
+		  po = pow(37, i);
+		  
+		  val += temp * po;
+	   }
+	   
 	   val = val % tablesize;
+	   if (val < 0)
+		  val += tablesize;
 	   return val;
     }
 }
